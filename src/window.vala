@@ -42,15 +42,20 @@ public class Window : Gtk.ApplicationWindow {
 
         settings = new Settings ("org.gnome.clocks.state.window");
 
+        int width, height;
+        settings.get ("size", "(ii)", out width, out height);
+        resize (width, height);
+
+        int x, y;
+        set_position (Gtk.WindowPosition.CENTER);
+        settings.get ("position", "(ii)", out x, out y);
+        move (x, y);
+
         // Setup window geometry saving
         Gdk.WindowState window_state = (Gdk.WindowState)settings.get_int ("state");
         if (Gdk.WindowState.MAXIMIZED in window_state) {
             maximize ();
         }
-
-        int width, height;
-        settings.get ("size", "(ii)", out width, out height);
-        resize (width, height);
 
         var builder = Utils.load_ui ("window.ui");
 
@@ -124,6 +129,10 @@ public class Window : Gtk.ApplicationWindow {
     }
 
     protected override bool configure_event (Gdk.EventConfigure event) {
+        int x, y;
+        get_position (out x, out y);
+        settings.set ("position", "(ii)", x, y);
+
         if (get_realized () && !(Gdk.WindowState.MAXIMIZED in get_window ().get_state ())) {
             settings.set ("size", "(ii)", event.width, event.height);
         }

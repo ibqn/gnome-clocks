@@ -46,6 +46,13 @@
         Width and height of the window.
       </_description>
     </key>
+    <key type="(ii)" name="position">
+      <default>(0, 0)</default>
+      <_summary>Window position</_summary>
+      <_description>
+        x and y position of the window.
+      </_description>
+    </key>
     <key enum="org.gnome.clocks.panelid" name="panel-id">
       <default>"world"</default>
       <_summary>Panel state</_summary>
